@@ -18,26 +18,26 @@
     ]
   },
   "scripts": {
-    "create-dirs": "mkdir -p dist",
-    "build": "concurrent -p command 'npm run build-js' 'npm run build-css'",
-    "build-css": "lessc assets/site.less | autoprefixer -b 'last 2 versions, > 5%' | tee dist/site.css | cleancss -o dist/site.min.css",
-    "build-js": "browserify . -d --extension=.jsx | tee dist/bundle.js | uglifyjs - -c warnings=false -m | tee dist/bundle.min.js | gzip > dist/bundle.min.js.gz",
+    "create-dirs": "if not exist dist mkdir dist",
+    "build": "concurrent -p command \"npm.cmd run build-js\" \"npm.cmd run build-css\" \"npm.cmd run min-js\"",
+    "build-css": "lessc assets/site.less | cleancss -o dist/site.min.css",
+    "build-js": "browserify . -d --extension=.jsx -o dist/bundle.js",
     "lint": "eslint src",
-    "prebuild": "rm -rf dist/* && npm run create-dirs",
-    "postbuild": "echo \"Finished NODE_ENV=${NODE_ENV}\"",
+    "min-js": "browserify . -d --extension=.jsx | uglifyjs - -c warnings=false -m > dist/bundle.min.js",
+    "prebuild": "rmdir /s /q dist & npm run create-dirs",
+    "postbuild": "echo \"Finished NODE_ENV=%NODE_ENV%\"",
     "prepublish": "npm run prod-build",
     "prewatch": "npm run create-dirs",
-    "prod-build": "NODE_ENV=production npm run build",
-    "watch": "concurrent -p command 'npm run watch-js' 'npm run watch-css' 'npm run watch-browser'",
-    "watch-browser": "sleep 5 && browser-sync start --config bs-config.js",
-    "watch-css": "npm run build-css && onchange assets/** -- npm run build-css",
-    "watch-js": "watchify src/browser.jsx -d --extension=.jsx -v -o 'tee dist/bundle.js | uglifyjs - -c warnings=false -m | tee dist/bundle.min.js | gzip > dist/bundle.min.js.gz'"
+    "prod-build": "set LAST_NODE_ENV=%NODE_ENV%& set NODE_ENV=production& npm run build & set NODE_ENV=%LAST_NODE_ENV%& echo \"production build finished, NODE_ENV restored to:%NODE_ENV%\"",
+    "watch": "concurrent -p command \"npm.cmd run watch-js\" \"npm.cmd run watch-css\" \"npm.cmd run watch-browser\"",
+    "watch-browser": "browser-sync start --config bs-config.js",
+    "watch-css": "sane \"npm run build-css\" assets",
+    "watch-js": "watchify src/browser.jsx -d --extension=.jsx -v -o dist/bundle.js"
   },
   "engines": {
     "node": ">=0.10"
   },
   "devDependencies": {
-    "autoprefixer": "^5.1.0",
     "babel-eslint": "^3.0.1",
     "babelify": "^6.1.0",
     "browser-sync": "^2.6.9",
@@ -46,9 +46,9 @@
     "concurrently": "^0.0.5",
     "eslint": "^0.21.0",
     "less": "^2.4.0",
-    "onchange": "^1.0.0",
+    "sane": "^1.1.2",
     "uglify-js": "^2.4.21",
-    "watchify": "^3.2.0"
+    "watchify": "^3.2.1"
   },
   "dependencies": {
     "axios": "^0.5.4",

@@ -1,13 +1,12 @@
-This is a **minimal React.js boilerplate with an auto build environment** which you can fork and clone to easily setup your own projects.
+This is a **minimal React.js boilerplate with an auto build environment for Windows** which you can fork and clone to easily setup your own projects.
 
-Tip: Using [git-clone-init](https://github.com/jeffbski/git-clone-init) makes this very simple.
-
-`git-clone-init https://github.com/jeffbski/base-react-min.git myProjectName`
+Use git to clone or download the zip from GitHub and run `npm install`
 
 TODO: Replace this boilerplate with your project description
 
 Features:
 
+ - **Windows support** - Tested on WinXP, should work on anything newer. Also works with msys (but not required). Only restriction is that needs to use local drives, not network drives.
  - **React.js JSX example which fetches from REST source and renders**
  - **simple build and auto rebuild** (watch) using npm run scripts
  - **browser-sync** for auto reloading in browser on change
@@ -17,7 +16,6 @@ Features:
  - **watchify** to automatically rebuild on changes
  - **uglify** for js minification
  - **less** CSS style compiler
- - **autoprefixer** for automatically adding css prefixes
  - **cleancss** for css minification
  - **axios** for promise based HTTP client
 
