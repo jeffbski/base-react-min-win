@@ -2,6 +2,8 @@ This is a **minimal React.js boilerplate with an auto build environment for Wind
 
 Use git to clone or download the zip from GitHub and run `npm install`
 
+This boilerplate is specifically for Windows users. Non-windows users should see https://github.com/jeffbski/base-react-min
+
 TODO: Replace this boilerplate with your project description
 
 Features:
